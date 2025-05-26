@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "JoinControl.h"
 #include "JoinUI.h"
 #include <string>

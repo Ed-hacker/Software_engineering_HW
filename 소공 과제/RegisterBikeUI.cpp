@@ -1,4 +1,4 @@
-#include "RegisterBikeUI.h"
+﻿#include "RegisterBikeUI.h"
 #include <string>
 
 // 새로운 자전거 등록 UI 객체를 생성한다
@@ -22,6 +22,6 @@ void RegisterBikeUI::handleBikeRegistration(std::istream& in, std::ostream& out,
     if (success) {
         out << "> " << id << " " << model << "\n";
     } else {
-        out << "> 등록 실패 (이미 존재하는 ID 등)\n";
+        out << ">등록 실패(이미 존재하는 ID)\n";
     }
 } 

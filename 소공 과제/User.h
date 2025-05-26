@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 #include "Bike.h" // Bike 클래스 사용을 위해 포함 (전방선언 대신)
 
-// class Bike; // Bike.h를 직접 포함하므로 전방선언 불필요
+ // class Bike; // Bike.h를 직접 포함하므로 전방선언 불필요
 
 // 사용자 유형을 정의한다
 enum class UserType {

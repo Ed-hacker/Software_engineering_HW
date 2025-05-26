@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -9,7 +9,6 @@
 #include "LoginUI.h"
 #include "LogoutControl.h"
 #include "LogoutUI.h"
-#include "Bike.h"
 #include "RegisterBikeControl.h"
 #include "RegisterBikeUI.h"
 #include "RentBikeControl.h"
@@ -18,6 +17,7 @@
 #include "ListRentedBikeUI.h"
 #include "UserList.h"
 #include "BikeList.h"
+#include "ExitUI.h"
 
 // 입력 파일 이름을 정의한다
 #define INPUT_FILE_NAME "input.txt"
@@ -25,9 +25,8 @@
 #define OUTPUT_FILE_NAME "output.txt"
 
 // 함수 선언
-void doTask(std::ifstream& inFile, std::ofstream& outFile, User*& currentLoginUser, JoinUI* joinUI, LoginUI* loginUI, LogoutUI* logoutUI, RegisterBikeUI* registerBikeUI, RentBikeUI* rentBikeUI, ListRentedBikeUI* listRentedBikeUI);
+void doTask(std::ifstream& inFile, std::ofstream& outFile, User*& currentLoginUser, JoinUI* joinUI, LoginUI* loginUI, LogoutUI* logoutUI, RegisterBikeUI* registerBikeUI, RentBikeUI* rentBikeUI, ListRentedBikeUI* listRentedBikeUI, ExitUI* exitUI);
 
-// 프로그램의 시작점이다
 int main() {
     std::ifstream in_fp; // 입력 파일 스트림
     std::ofstream out_fp; // 출력 파일 스트림
@@ -52,12 +51,14 @@ int main() {
     ListRentedBikeControl* listRentedBikeCtrl = new ListRentedBikeControl(&currentLoginUser);
     ListRentedBikeUI* listRentedBikeUI = new ListRentedBikeUI(listRentedBikeCtrl);
 
+    ExitUI* exitUI = new ExitUI();
+
     // 입출력 파일을 연다
     in_fp.open(INPUT_FILE_NAME);
     out_fp.open(OUTPUT_FILE_NAME);
-    
+   
     // 파일로부터 명령을 읽어 처리하는 주 루프를 실행한다
-    doTask(in_fp, out_fp, currentLoginUser, joinUI, loginUI, logoutUI, registerBikeUI, rentBikeUI, listRentedBikeUI);
+    doTask(in_fp, out_fp, currentLoginUser, joinUI, loginUI, logoutUI, registerBikeUI, rentBikeUI, listRentedBikeUI, exitUI);
     
     // 동적으로 할당된 객체들의 메모리를 해제한다
     delete joinCtrl; delete joinUI;
@@ -66,16 +67,17 @@ int main() {
     delete registerBikeCtrl; delete registerBikeUI;
     delete rentBikeCtrl; delete rentBikeUI;
     delete listRentedBikeCtrl; delete listRentedBikeUI;
+    delete exitUI;
     
     // 열었던 파일들을 닫는다
     if (in_fp.is_open()) in_fp.close();
-    if (out_fp.is_open()) out_fp.close();
+    if (out_fp.is_open()) in_fp.close();
     
     return 0; // 프로그램 정상 종료
 }
 
 // 파일로부터 입력을 받아 각 메뉴에 따른 작업을 수행하고 결과를 파일에 출력한다
-void doTask(std::ifstream& inFile, std::ofstream& outFile, User*& currentLoginUser, JoinUI* joinUI, LoginUI* loginUI, LogoutUI* logoutUI, RegisterBikeUI* registerBikeUI, RentBikeUI* rentBikeUI, ListRentedBikeUI* listRentedBikeUI) {
+void doTask(std::ifstream& inFile, std::ofstream& outFile, User*& currentLoginUser, JoinUI* joinUI, LoginUI* loginUI, LogoutUI* logoutUI, RegisterBikeUI* registerBikeUI, RentBikeUI* rentBikeUI, ListRentedBikeUI* listRentedBikeUI, ExitUI* exitUI) {
     int menu_level_1 = 0, menu_level_2 = 0; // 파일에서 읽어올 메뉴 번호
     int is_program_exit = 0; // 종료 메뉴 선택 여부 플래그
     
@@ -120,7 +122,7 @@ void doTask(std::ifstream& inFile, std::ofstream& outFile, User*& currentLoginUs
             case 6: { // 종료 메뉴
                 switch(menu_level_2) {
                     case 1: {
-                        outFile << "6.1. 종료\n"; // 종료 메시지 출력
+                        exitUI->exitProgram(outFile); // 종료 메시지 출력
                         is_program_exit = 1; // 프로그램 종료 플래그 설정
                         break;
                     }

@@ -1,4 +1,4 @@
-2.1. 로그인
+﻿2.1. 로그인
 > admin admin
 3.1. 자전거 등록
 > b1 bikeMaker
@@ -17,4 +17,4 @@
 5.1. 자전거 대여 리스트
 > b1 bikeMaker
 > b2 bikeProducer
-6.1. 종료
+6.1  종료

@@ -1,4 +1,4 @@
-#include "LogoutUI.h"
+﻿#include "LogoutUI.h"
 #include <string>
 
 // 새로운 로그아웃 UI 객체를 생성한다
